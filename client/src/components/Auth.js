@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 function Register(props) {
+  const { pathname } = useLocation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    console.log(location);
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      username,
-      password,
-    });
-    const respone = await fetch("/auth/register", {
+
+    const respone = await fetch(`/auth${pathname}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
