@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env["COOKIE_SECRET"]));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../client", "build")));
 
 const authRequired = (req, res, next) => {
   const token = req.signedCookies.token;
@@ -32,5 +33,10 @@ const authRequired = (req, res, next) => {
 app.use("/auth", require("./routes/auth"));
 
 app.use("/api", /*authRequired,*/ require("./routes"));
+
+app.get(
+  "*",
+  express.static(path.join(__dirname, "../client", "build", "index.html"))
+);
 
 module.exports = app;
