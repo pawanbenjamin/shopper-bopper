@@ -16,23 +16,8 @@ app.use(cookieParser(process.env["COOKIE_SECRET"]));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "../client", "build")));
 
-const authRequired = (req, res, next) => {
-  const token = req.signedCookies.token;
-  try {
-    jwt.verify(token, process.env["JWT_SECRET"]);
-  } catch (error) {
-    res.status(401).send({
-      loggedIn: false,
-      message: "You are def not authorized.",
-    });
-    return;
-  }
-  next();
-};
-
 app.use("/auth", require("./routes/auth"));
-
-app.use("/api", /*authRequired,*/ require("./routes"));
+app.use("/api", require("./routes"));
 
 app.get(
   "*",
