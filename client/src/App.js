@@ -1,5 +1,3 @@
-import "./App.css";
-
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 import Auth from "./components/Auth";

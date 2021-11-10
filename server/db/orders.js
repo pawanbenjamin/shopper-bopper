@@ -89,6 +89,7 @@ async function getCart(userId) {
     `,
       [userId]
     );
+    console.log("IN THE GET CART", cart);
     return cart;
   } catch (error) {
     throw error;

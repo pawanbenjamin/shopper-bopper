@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router";
+import { store } from "../state";
 
 function Register(props) {
+  const { state, dispatch } = useContext(store);
+
   const { pathname } = useLocation();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,6 +27,9 @@ function Register(props) {
         password: password,
       }),
     });
+    const data = await respone.json();
+
+    dispatch({ type: "SET_USER", value: data });
   };
 
   return (
