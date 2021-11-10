@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",

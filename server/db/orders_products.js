@@ -6,7 +6,7 @@ async function addToCart({ productId, orderId, qty }) {
       rows: [order_product],
     } = await pool.query(
       `
-      INSERT INTO orders_products("orderId", "productId", qty)
+      INSERT INTO orders_products("productId", "orderId", qty)
            VALUES($1, $2, $3)
            RETURNING * 
         `,

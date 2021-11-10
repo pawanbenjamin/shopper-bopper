@@ -24,6 +24,7 @@ function Nav({ isLoggedIn, setIsLoggedIn }) {
           <NavLink to="/login">Login</NavLink>
         </>
       )}
+      <NavLink to="/cart">Cart</NavLink>
     </div>
   );
 }

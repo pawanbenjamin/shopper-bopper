@@ -4,6 +4,7 @@ import { store } from "./state";
 import Auth from "./components/Auth";
 import Products from "./components/Products";
 import Nav from "./components/Nav";
+import Cart from "./components/Cart";
 
 function App() {
   const { state, dispatch } = useContext(store);
@@ -17,6 +18,7 @@ function App() {
         const user = await response.json();
         console.log(user);
         dispatch({ type: "SET_USER", value: user });
+        setIsLoggedIn(true);
       } catch (error) {
         console.log("USER NOT LOGGED IN");
       }
@@ -49,6 +51,9 @@ function App() {
           </Route>
           <Route path="/products">
             <Products />
+          </Route>
+          <Route path="/cart">
+            <Cart />
           </Route>
         </Switch>
       </Router>

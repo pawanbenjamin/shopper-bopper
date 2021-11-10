@@ -71,7 +71,7 @@ async function updateUser({ id, username, password }) {
   }
 }
 
-// * Must delete Cart (orders_products) before using this function
+// Must delete Cart (orders_products) before using this function
 async function deleteUser(userId) {
   try {
     const {

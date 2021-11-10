@@ -135,7 +135,9 @@ async function seedDb() {
 
   const carts = [
     { orderId: 1, productId: 1, qty: 2 },
-    { orderId: 2, productId: 2, qty: 2 },
+    { orderId: 2, productId: 2, qty: 3 },
+    { orderId: 3, productId: 3, qty: 2 },
+    { orderId: 4, productId: 4, qty: 3 },
   ];
 
   console.log("Adding items to Cart...");

@@ -5,6 +5,7 @@ const { addToCart, removeFromCart, updateQtyInCart } = require("../db");
 // Add new item to cart
 orders_productsRouter.post("/", async (req, res, next) => {
   try {
+    console.log("REQ BODY", req.body);
     const order_product = await addToCart(req.body); // productId, orderId, qty
     res.send(order_product);
   } catch (error) {
