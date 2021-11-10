@@ -2,6 +2,12 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { store } from "../state";
 
+const style = {
+  links: {
+    backgroundColor: "blue",
+  },
+};
+
 function Nav({ isLoggedIn, setIsLoggedIn }) {
   const { state, dispatch } = useContext(store);
 

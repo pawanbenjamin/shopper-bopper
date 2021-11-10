@@ -18,12 +18,23 @@ function Products(props) {
     if (!state.cart) {
       return;
     }
-    const { data } = await axios.post("/api/orders_products", {
-      productId: prodId,
-      orderId: state.cart[0].orderId,
-      qty: 1,
-    });
-    console.log("DATA", data);
+    const [currentItem] = state.cart.filter(
+      (item) => item.productId === prodId
+    );
+    console.log(currentItem);
+    if (currentItem) {
+      await axios.put("/api/orders_products", {
+        productId: prodId,
+        orderId: currentItem.orderId,
+        qty: currentItem.qty + 1,
+      });
+    } else {
+      const { data } = await axios.post("/api/orders_products", {
+        productId: prodId,
+        orderId: state.cart[0].orderId,
+        qty: 1,
+      });
+    }
   };
 
   const prods = products.map((product) => {
