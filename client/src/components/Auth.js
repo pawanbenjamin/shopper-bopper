@@ -1,18 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useHistory } from "react-router";
 import { store } from "../state";
 
 function Register(props) {
   const { state, dispatch } = useContext(store);
 
   const { pathname } = useLocation();
+  const history = useHistory();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    console.log(location);
-  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +27,9 @@ function Register(props) {
     const data = await respone.json();
 
     dispatch({ type: "SET_USER", value: data });
+    setUsername("");
+    setPassword("");
+    history.push("/products");
   };
 
   return (

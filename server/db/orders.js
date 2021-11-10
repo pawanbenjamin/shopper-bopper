@@ -75,9 +75,7 @@ async function getAllOrdersByUserId(userId) {
 // Get Cart (order that is active) and include everything
 async function getCart(userId) {
   try {
-    const {
-      rows: [cart],
-    } = await pool.query(
+    const { rows } = await pool.query(
       `
       SELECT *
           FROM orders 
@@ -89,8 +87,8 @@ async function getCart(userId) {
     `,
       [userId]
     );
-    console.log("IN THE GET CART", cart);
-    return cart;
+
+    return rows;
   } catch (error) {
     throw error;
   }

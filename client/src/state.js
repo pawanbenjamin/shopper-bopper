@@ -22,6 +22,9 @@ const StateProvider = ({ children }) => {
         };
         return newState;
       }
+      case "LOG_OUT": {
+        return {};
+      }
       default:
         throw new Error();
     }

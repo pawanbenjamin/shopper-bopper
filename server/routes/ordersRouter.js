@@ -35,7 +35,6 @@ ordersRouter.get("/:id", async (req, res, next) => {
 ordersRouter.post("/user/:userId", async (req, res, next) => {
   try {
     const order = await createOrderByUserId(req.params.userId);
-
     res.send(order);
   } catch (error) {
     next(error);
@@ -46,7 +45,6 @@ ordersRouter.post("/user/:userId", async (req, res, next) => {
 ordersRouter.get("/user/:userId/cart", async (req, res, next) => {
   try {
     const cart = await getCart(req.params.userId);
-    console.log("HERE I AM RIGHT NOW", cart);
     res.send(cart);
   } catch (error) {
     next(error);

@@ -1,8 +1,12 @@
+const bcrypt = require("bcrypt");
+
 const pool = require("./pool");
 
 const { createUser, createProduct } = require("./index");
 const { createOrderByUserId } = require("./orders");
 const { addToCart } = require("./orders_products");
+
+const saltRounds = 10;
 
 async function buildTables() {
   try {
@@ -76,8 +80,18 @@ async function seedDb() {
     },
   ];
 
+  const hashedUsers = await Promise.all(
+    users.map(async (user) => {
+      const hash = await bcrypt.hash(user.password, saltRounds);
+      user.password = hash;
+      return user;
+    })
+  );
+
+  console.log(hashedUsers);
+
   console.log("Creating Users...");
-  const createdUsers = await Promise.all(users.map(createUser));
+  const createdUsers = await Promise.all(hashedUsers.map(createUser));
   console.log("Users:", createdUsers);
 
   console.log("Creating Orders...");
