@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useHistory } from "react-router";
 import { store } from "../state";
 
-function Register(props) {
+function Auth(props) {
   const { state, dispatch } = useContext(store);
 
   const { pathname } = useLocation();
@@ -53,4 +53,4 @@ function Register(props) {
   );
 }
 
-export default Register;
+export default Auth;

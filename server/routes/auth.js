@@ -74,4 +74,15 @@ authRouter.post("/logout", async (req, res, next) => {
   }
 });
 
+authRouter.get("/me", async (req, res, next) => {
+  const token = req.signedCookies.token;
+  try {
+    const user = await jwt.verify(token, process.env["JWT_SECRET"]);
+    console.log(user);
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = authRouter;

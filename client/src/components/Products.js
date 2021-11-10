@@ -14,7 +14,7 @@ function Products(props) {
 
   const prods = products.map((product) => {
     return (
-      <div>
+      <div key={product.id}>
         <h2>{product.name}</h2>
         <ul>
           <li>{product.description}</li>

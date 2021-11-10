@@ -11,6 +11,20 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const getMe = async () => {
+      try {
+        const response = await fetch("/auth/me");
+        const user = await response.json();
+        console.log(user);
+        dispatch({ type: "SET_USER", value: user });
+      } catch (error) {
+        console.log("USER NOT LOGGED IN");
+      }
+    };
+    getMe();
+  }, []);
+
+  useEffect(() => {
     const getCart = async () => {
       const response = await fetch(`/api/orders/user/${state.user.id}/cart`);
       const cart = await response.json();
@@ -30,11 +44,11 @@ function App() {
           <Route path="/register">
             <Auth />
           </Route>
-          <Route path="/products">
-            <Products />
-          </Route>
           <Route path="/login">
             <Auth />
+          </Route>
+          <Route path="/products">
+            <Products />
           </Route>
         </Switch>
       </Router>
