@@ -6,7 +6,7 @@ const userContext = createContext(initialState);
 const { Provider } = userContext;
 
 const UserProvider = ({ children }) => {
-  const [state, dispatch] = useReducer((oldState, action) => {
+  const [userState, userDispatch] = useReducer((oldState, action) => {
     switch (action.type) {
       case "SET_USER": {
         const newState = {
@@ -22,7 +22,7 @@ const UserProvider = ({ children }) => {
     }
   }, initialState);
 
-  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+  return <Provider value={{ userState, userDispatch }}>{children}</Provider>;
 };
 
 export { userContext, UserProvider };

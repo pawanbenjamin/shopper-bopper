@@ -3,7 +3,7 @@ import { useLocation, useHistory } from "react-router";
 import { userContext } from "../context/userContext";
 
 function Auth({ setIsLoggedIn }) {
-  const { state, dispatch } = useContext(userContext);
+  const { userState, userDispatch } = useContext(userContext);
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -25,7 +25,7 @@ function Auth({ setIsLoggedIn }) {
     });
     const data = await respone.json();
 
-    dispatch({ type: "SET_USER", value: data });
+    userDispatch({ type: "SET_USER", value: data });
 
     setUsername("");
     setPassword("");

@@ -6,6 +6,8 @@ import Products from "./components/Products";
 import Nav from "./components/Nav";
 import Cart from "./components/Cart";
 
+import { CartProvider } from "./context/cartContext";
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
@@ -19,12 +21,14 @@ function App() {
           <Route path="/login">
             <Auth setIsLoggedIn={setIsLoggedIn} />
           </Route>
-          <Route path="/products">
-            <Products />
-          </Route>
-          <Route path="/cart">
-            <Cart />
-          </Route>
+          <CartProvider>
+            <Route path="/products">
+              <Products />
+            </Route>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+          </CartProvider>
         </Switch>
       </Router>
     </div>
