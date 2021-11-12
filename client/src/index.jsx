@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 
 import App from "./App";
 
-import { StateProvider } from "./state";
+import { UserProvider } from "./context/userContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider>
+    <UserProvider>
       <App />
-    </StateProvider>
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

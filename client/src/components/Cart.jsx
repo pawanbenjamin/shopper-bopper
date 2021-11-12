@@ -1,32 +1,27 @@
-import React, { useContext, useEffect } from "react";
-import { store } from "../state";
+import React, { useEffect, useContext } from "react";
+import { cartContext } from "../context/cartContext";
+import { userContext } from "../context/userContext";
 
 function Cart(props) {
-  const { state, dispatch } = useContext(store);
+  const { cartState, cartDispatch } = useContext(cartContext);
+  const { userState } = useContext(userContext);
 
   useEffect(() => {
-    const getCart = async () => {
-      const response = await fetch(`/api/orders/user/${state.user.id}/cart`);
+    async function getCart() {
+      const response = await fetch(
+        `/api/orders/user/${userState.user.id}/cart`
+      );
       const cart = await response.json();
-      dispatch({ type: "GET_CART", value: cart });
-    };
-    if (state.user) {
-      getCart();
+      cartDispatch({ type: "SET_CART", value: cart });
+      console.log(cartState);
     }
+    getCart();
   }, []);
 
   const products =
-    state.cart &&
-    state.cart.map((product) => {
-      return (
-        <div key={product.id}>
-          <h2>{product.name}</h2>
-          <ul>
-            <li>{product.description}</li>
-            <li>{product.price}</li>
-          </ul>
-        </div>
-      );
+    cartState.cart &&
+    cartState.cart.map((item) => {
+      return <h1>{item.name}</h1>;
     });
 
   return <div>{products ? products : <span>Nothing in Your Cart!</span>}</div>;
