@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Nav isLoggedIn={isLoggedIn} />
+        <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Switch>
           <Route path="/register">
             <Auth setIsLoggedIn={setIsLoggedIn} />
