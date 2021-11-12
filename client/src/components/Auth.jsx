@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useHistory } from "react-router";
+import { userContext } from "../context/userContext";
 
 function Auth({ setIsLoggedIn }) {
+  const { state, dispatch } = useContext(userContext);
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -22,6 +24,8 @@ function Auth({ setIsLoggedIn }) {
       }),
     });
     const data = await respone.json();
+
+    dispatch({ type: "SET_USER", value: data });
 
     setUsername("");
     setPassword("");
