@@ -20,7 +20,7 @@ function Products(props) {
 
   async function addToCart(productId) {
     const item = cartState.items.filter((item) => item.id === productId);
-    if (item) {
+    if (item.length) {
       const response = await axios.put(`/api/orders_products/`, {
         productId,
         orderId: userState.user.cartId,
