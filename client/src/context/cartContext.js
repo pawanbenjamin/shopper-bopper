@@ -10,10 +10,13 @@ const CartProvider = ({ children }) => {
     switch (action.type) {
       case "SET_CART": {
         const newState = {
-          ...oldState,
-          cart: action.value,
+          orderId: action.value.length ? action.value[0].orderId : null,
+          items: [...action.value],
         };
         return newState;
+      }
+      case "CLEAR_CART": {
+        return initialState;
       }
       default:
         throw new Error();

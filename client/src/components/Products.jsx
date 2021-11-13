@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-
+import { cartContext } from "../context/cartContext";
 function Products(props) {
+  const { cartState, cartDispatch } = useContext(cartContext);
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -12,6 +14,18 @@ function Products(props) {
     getProducts();
   }, []);
 
+  async function addToCart(productId) {
+    const response = await fetch(`/api/orders_products/`, {
+      method: "POST",
+      headers: {},
+      body: JSON.stringify({
+        productId,
+        orderId: cartState.orderId,
+        qty: 1,
+      }),
+    });
+  }
+
   const prods = products.map((product) => {
     return (
       <div key={product.id}>
@@ -20,6 +34,12 @@ function Products(props) {
           <li>{product.description}</li>
           <li>{product.price}</li>
         </ul>
+        {cartState.items &&
+        cartState.items.filter((item) => item.id === product.id).length ? (
+          <h1>Already in Cart</h1>
+        ) : (
+          <button onClick={addToCart}>Add to Cart</button>
+        )}
       </div>
     );
   });

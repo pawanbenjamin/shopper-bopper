@@ -12,16 +12,24 @@ function Cart(props) {
         `/api/orders/user/${userState.user.id}/cart`
       );
       const cart = await response.json();
+      console.log(cart);
       cartDispatch({ type: "SET_CART", value: cart });
-      console.log(cartState);
     }
-    getCart();
+    if (userState.user) {
+      getCart();
+    }
   }, []);
 
   const products =
-    cartState.cart &&
-    cartState.cart.map((item) => {
-      return <h1>{item.name}</h1>;
+    cartState.items &&
+    cartState.items.map((item) => {
+      return (
+        <>
+          <h3>{item.name}</h3>
+          <h4>{item.price}</h4>
+          <h5>{item.qty}</h5>
+        </>
+      );
     });
 
   return <div>{products ? products : <span>Nothing in Your Cart!</span>}</div>;

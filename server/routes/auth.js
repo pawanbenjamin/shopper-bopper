@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const authRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
-const { createUser, loginUser } = require("../db");
+const { createUser, loginUser, createOrderByUserId } = require("../db");
 
 const saltRounds = 10;
 
@@ -21,6 +21,9 @@ authRouter.post("/register", async (req, res, next) => {
       httpOnly: true,
       signed: true,
     });
+
+    const cart = await createOrderByUserId(user.id);
+    user.cartId = cart.id;
 
     res.send(user);
   } catch (error) {
