@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { cartContext } from "../context/cartContext";
 import { userContext } from "../context/userContext";
+
 function Products(props) {
   const { cartState, cartDispatch } = useContext(cartContext);
   const { userState } = useContext(userContext);

@@ -2,10 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useHistory } from "react-router";
 import { userContext } from "../context/userContext";
 import { cartContext } from "../context/cartContext";
+import axios from "axios";
 
 function Auth({ setIsLoggedIn }) {
   const { userDispatch } = useContext(userContext);
   const { cartDispatch } = useContext(cartContext);
+
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -15,22 +17,16 @@ function Auth({ setIsLoggedIn }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const respone = await fetch(`/auth${pathname}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
+    const { data } = await axios.post(`/auth${pathname}`, {
+      username: username,
+      password: password,
     });
-    const data = await respone.json();
+
     userDispatch({ type: "SET_USER", value: data });
 
-    const cartResponse = await fetch(`/api/orders/user/${data.id}/cart`);
+    const cartResponse = await axios.get(`/api/orders/user/${data.id}/cart`);
     const cart = await cartResponse.json();
-    console.log(cart);
+
     cartDispatch({
       type: "SET_CART",
       value: { items: [...cart], cartId: data.cartId },

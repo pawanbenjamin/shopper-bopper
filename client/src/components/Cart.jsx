@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useContext } from "react";
 import { cartContext } from "../context/cartContext";
 import { userContext } from "../context/userContext";
@@ -8,14 +9,13 @@ function Cart(props) {
 
   useEffect(() => {
     async function getCart() {
-      const response = await fetch(
+      const { data } = await axios.get(
         `/api/orders/user/${userState.user.id}/cart`
       );
-      const cart = await response.json();
-      console.log(cart);
+
       cartDispatch({
         type: "SET_CART",
-        value: { items: [...cart], cartId: userState.user.cartId },
+        value: { items: [...data], cartId: userState.user.cartId },
       });
     }
     if (userState.user) {
