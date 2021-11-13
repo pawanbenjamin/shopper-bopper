@@ -1,7 +1,10 @@
+import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { cartContext } from "../context/cartContext";
+import { userContext } from "../context/userContext";
 function Products(props) {
   const { cartState, cartDispatch } = useContext(cartContext);
+  const { userState } = useContext(userContext);
 
   const [products, setProducts] = useState([]);
 
@@ -12,18 +15,24 @@ function Products(props) {
       setProducts(data);
     }
     getProducts();
+    console.log(userState);
   }, []);
 
   async function addToCart(productId) {
-    const response = await fetch(`/api/orders_products/`, {
-      method: "POST",
-      headers: {},
-      body: JSON.stringify({
+    const item = cartState.items.filter((item) => item.id === productId);
+    if (item) {
+      const response = await axios.put(`/api/orders_products/`, {
         productId,
-        orderId: cartState.orderId,
+        orderId: userState.user.cartId,
+        qty: item.qty + 1,
+      });
+    } else {
+      const response = await axios.post(`/api/orders_products/`, {
+        productId,
+        orderId: userState.user.cartId,
         qty: 1,
-      }),
-    });
+      });
+    }
   }
 
   const prods = products.map((product) => {
@@ -38,7 +47,7 @@ function Products(props) {
         cartState.items.filter((item) => item.id === product.id).length ? (
           <h1>Already in Cart</h1>
         ) : (
-          <button onClick={addToCart}>Add to Cart</button>
+          <button onClick={() => addToCart(product.id)}>Add to Cart</button>
         )}
       </div>
     );

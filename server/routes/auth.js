@@ -1,7 +1,12 @@
 const bcrypt = require("bcrypt");
 const authRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
-const { createUser, loginUser, createOrderByUserId } = require("../db");
+const {
+  createUser,
+  loginUser,
+  createOrderByUserId,
+  getCart,
+} = require("../db");
 
 const saltRounds = 10;
 
@@ -51,6 +56,8 @@ authRouter.post("/login", async (req, res, next) => {
           signed: true,
         });
 
+        const cart = await getCart(user.id);
+        user.cartId = cart.id;
         res.send(user);
       } else {
         res.status(400).json({ error: "Invalid Password" });

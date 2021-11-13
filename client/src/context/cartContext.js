@@ -10,8 +10,8 @@ const CartProvider = ({ children }) => {
     switch (action.type) {
       case "SET_CART": {
         const newState = {
-          orderId: action.value.length ? action.value[0].orderId : null,
-          items: [...action.value],
+          orderId: action.value.cartId,
+          items: [...action.value.items],
         };
         return newState;
       }
