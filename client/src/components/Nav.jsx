@@ -18,7 +18,7 @@ function Nav({ isLoggedIn, setIsLoggedIn }) {
   console.log(userDispatch);
   return (
     <div>
-      {userState.user ? <h3>Welcome {userState.user.username}</h3> : null}
+      {userState.id ? <h3>Welcome {userState.username}</h3> : null}
       <NavLink to="/products">Products</NavLink>
       {isLoggedIn ? (
         <button onClick={handleLogout}>Logout</button>

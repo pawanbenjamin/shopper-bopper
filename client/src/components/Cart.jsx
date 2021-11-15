@@ -9,16 +9,14 @@ function Cart(props) {
 
   useEffect(() => {
     async function getCart() {
-      const { data } = await axios.get(
-        `/api/orders/user/${userState.user.id}/cart`
-      );
+      const { data } = await axios.get(`/api/orders/user/${userState.id}/cart`);
 
       cartDispatch({
         type: "SET_CART",
-        value: { items: [...data], cartId: userState.user.cartId },
+        value: { items: [...data], cartId: userState.cartId },
       });
     }
-    if (userState.user) {
+    if (userState.id) {
       getCart();
     }
   }, []);

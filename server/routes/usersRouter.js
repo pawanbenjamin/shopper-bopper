@@ -5,12 +5,11 @@ const {
   getUser,
   updateUser,
   deleteUser,
-  createOrderByUserId,
+  // createOrderByUserId,
   getCart,
 } = require("../db");
 
 // Get User
-//localhost:500/api/users/:id
 usersRouter.get(`/:id`, async (req, res, next) => {
   try {
     const user = await getUser(req.params.id);
@@ -21,7 +20,6 @@ usersRouter.get(`/:id`, async (req, res, next) => {
 });
 
 // Create User
-///api/users/
 usersRouter.post("/", async (req, res, next) => {
   try {
     const user = await createUser(req.body);
