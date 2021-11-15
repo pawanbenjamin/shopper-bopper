@@ -9,26 +9,25 @@ const { addToCart } = require("./orders_products");
 const saltRounds = 10;
 
 async function buildTables() {
-  try {
-    await pool.query(`
+  await pool.query(`
         DROP TABLE IF EXISTS orders_products;
         DROP TABLE IF EXISTS products;
         DROP TABLE IF EXISTS orders;
         DROP TABLE IF EXISTS users;
       `);
 
-    console.log("Creating Users Table...");
+  console.log("Creating Users Table...");
 
-    await pool.query(`
+  await pool.query(`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL
     );`);
 
-    console.log("Creating Orders Table...");
+  console.log("Creating Orders Table...");
 
-    await pool.query(`
+  await pool.query(`
       CREATE TABLE orders(
         id SERIAL PRIMARY KEY,
         "userId" INTEGER REFERENCES users(id),
@@ -36,9 +35,9 @@ async function buildTables() {
       );
         `);
 
-    console.log("Creating Products...");
+  console.log("Creating Products...");
 
-    await pool.query(`
+  await pool.query(`
         CREATE TABLE products(
           id SERIAL PRIMARY KEY,
           name VARCHAR(255) UNIQUE NOT NULL,
@@ -48,15 +47,12 @@ async function buildTables() {
         );
       `);
 
-    await pool.query(`
+  await pool.query(`
       CREATE TABLE orders_products(
         "productId" INTEGER REFERENCES products(id),
         "orderId" INTEGER REFERENCES orders(id),
         qty INTEGER
       );`);
-  } catch (error) {
-    throw error;
-  }
 }
 
 // Create Initial Users
@@ -147,11 +143,6 @@ async function seedDb() {
     })
   );
   console.log("Carts:", createdCarts);
-
-  try {
-  } catch (error) {
-    throw error;
-  }
 }
 
 async function initDb() {

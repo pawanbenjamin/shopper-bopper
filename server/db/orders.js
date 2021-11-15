@@ -85,6 +85,7 @@ async function purchaseCart(orderId) {
     `,
     [orderId]
   );
+  return order;
 }
 
 async function deleteOrderById(orderId) {
