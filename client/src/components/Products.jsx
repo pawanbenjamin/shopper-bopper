@@ -11,8 +11,7 @@ function Products(props) {
 
   useEffect(() => {
     async function getProducts() {
-      const response = await fetch("/api/products");
-      const data = await response.json();
+      const { data } = await axios.get("/api/products");
       setProducts(data);
     }
     getProducts();
@@ -20,18 +19,18 @@ function Products(props) {
   }, []);
 
   async function addToCart(productId) {
-    if (userState.user) {
+    if (userState.id) {
       const item = cartState.items.filter((item) => item.id === productId);
       if (item.length) {
-        const response = await axios.put(`/api/orders_products/`, {
+        await axios.put(`/api/orders_products/`, {
           productId,
-          orderId: userState.user.cartId,
+          orderId: userState.cartId,
           qty: item.qty + 1,
         });
       } else {
-        const response = await axios.post(`/api/orders_products/`, {
+        await axios.post(`/api/orders_products/`, {
           productId,
-          orderId: userState.user.cartId,
+          orderId: userState.cartId,
           qty: 1,
         });
       }
