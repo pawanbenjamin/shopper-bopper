@@ -154,10 +154,9 @@ async function initDb() {
   } catch (error) {
     console.error(error);
   }
-  pool.end();
 }
 
-initDb();
+initDb().then(() => pool.end());
 
 module.exports = {
   initDb,
