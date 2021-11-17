@@ -61,7 +61,7 @@ async function deleteProduct(productId) {
     `,
     [productId]
   );
-  console.log("DELETED PRODUCT:", product);
+
   return product;
 }
 
