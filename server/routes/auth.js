@@ -46,9 +46,7 @@ authRouter.post("/login", async (req, res, next) => {
       if (validPassword) {
         delete user.password;
 
-        const token = jwt.sign(user, process.env["JWT_SECRET"], {
-          expiresIn: "1hr",
-        });
+        const token = jwt.sign(user, process.env["JWT_SECRET"]);
 
         res.cookie("token", token, {
           sameSite: "strict",
