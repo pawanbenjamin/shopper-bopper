@@ -156,8 +156,6 @@ async function initDb() {
   }
 }
 
-initDb().then(() => pool.end());
-
 module.exports = {
   initDb,
   buildTables,

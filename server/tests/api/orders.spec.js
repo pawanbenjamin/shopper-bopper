@@ -64,6 +64,7 @@ describe("GET /api/orders/user/:userId/cart", () => {
     expect(response.body).toEqual(
       objectContaining({
         isactive: true,
+        userId: id,
       })
     );
   });

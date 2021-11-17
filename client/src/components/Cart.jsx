@@ -13,7 +13,7 @@ function Cart(props) {
 
       cartDispatch({
         type: "SET_CART",
-        value: { items: [...data], cartId: userState.cartId },
+        value: { items: [...data], cartId: data.userId },
       });
     }
     if (userState.id) {
