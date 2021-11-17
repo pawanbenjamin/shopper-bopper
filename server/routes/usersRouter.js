@@ -23,6 +23,7 @@ usersRouter.get(`/:id`, async (req, res, next) => {
 usersRouter.post("/", async (req, res, next) => {
   try {
     const user = await createUser(req.body);
+    delete user.password;
     res.send(user);
   } catch (error) {
     next(error);

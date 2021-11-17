@@ -18,15 +18,9 @@ app.use(express.static(path.join(__dirname, "../client", "build")));
 app.use("/auth", require("./routes/auth"));
 app.use("/api", require("./routes"));
 
-// app.get(
-//   "*",
-//   express.static(path.join(__dirname, "../client", "build", "index.html"))
-// );
-app.get("*", (req, res) => {
-  res.status(404).send({
-    error: "404 - Not Found",
-    message: "No route found for the requested URL",
-  });
-});
+app.get(
+  "*",
+  express.static(path.join(__dirname, "../client", "build", "index.html"))
+);
 
 module.exports = app;

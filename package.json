@@ -9,7 +9,8 @@
     "seed:dev": "nodemon server/db/seedData.js",
     "start": "node server/index.js",
     "build": "npm install --prefix client && npm run build --prefix client ",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "test-w": "jest --coverage --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "volleyball": "^1.5.1"
