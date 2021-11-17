@@ -39,7 +39,7 @@ productsRouter.post("/", async (req, res, next) => {
 });
 
 // Update Product
-productsRouter.put("/:id", async (req, res, next) => {
+productsRouter.patch("/:id", async (req, res, next) => {
   try {
     const product = await updateProduct(req.body);
     res.send(product);

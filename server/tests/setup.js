@@ -1,8 +1,9 @@
-const { buildTables } = require("../db/seedData");
+const { buildTables, seedDb } = require("../db/seedData");
 
 const setup = async () => {
   console.log("--- JEST SETUP ---");
-  await buildTables();
+  // await buildTables();
+  // await seedDb();
 };
 
 module.exports = setup;

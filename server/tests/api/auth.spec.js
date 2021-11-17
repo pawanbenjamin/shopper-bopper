@@ -2,7 +2,6 @@ require("dotenv").config();
 const request = require("supertest");
 const app = require("../../app");
 const faker = require("faker");
-const { createUser } = require("../../db/users");
 
 const { objectContaining } = expect;
 
@@ -31,7 +30,7 @@ describe("POST /auth/login", () => {
     };
     await request(app).post("/auth/register").send(fakeUser);
     const response = await request(app).post("/auth/login").send(fakeUser);
-    console.log(response.body);
+
     expect(response.status).toEqual(200);
   });
 });
