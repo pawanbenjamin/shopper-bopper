@@ -18,7 +18,7 @@ describe("POST /api/users", () => {
       .send(fakeUser);
     expect(response.body).toEqual(
       objectContaining({
-        username: expect.any(String),
+        username: fakeUser.username,
         id: expect.any(Number),
       })
     );

@@ -54,8 +54,11 @@ authRouter.post("/login", async (req, res, next) => {
           signed: true,
         });
 
-        const cart = await getCart(user.id);
-        user.cartId = cart.id;
+        // const cart = await getCart(user.id);
+        // console.log("CART INSIDE EXPRESS ROUTE", cart);
+        // if (cart.id) {
+        //   user.cartId = cart.id;
+        // }
         res.send(user);
       } else {
         res.status(400).json({ error: "Invalid Password" });

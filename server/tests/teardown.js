@@ -1,5 +1,5 @@
 const pool = require("../db/pool");
-const { buildTables, seedDb } = require("../db/seedData");
+// const { buildTables, seedDb } = require("../db/seedData");
 
 const tearDown = async ({ watch, watchAll }) => {
   if (watch || watchAll) {

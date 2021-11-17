@@ -3,6 +3,7 @@ const request = require("supertest");
 const app = require("../../app");
 const faker = require("faker");
 const { createFakeProduct } = require("../helpers");
+// const { buildTables, seedDb } = require("../../db/seedData");
 
 const { objectContaining } = expect;
 

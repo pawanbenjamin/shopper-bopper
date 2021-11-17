@@ -29,7 +29,7 @@ function Auth({ setIsLoggedIn }) {
 
     cartDispatch({
       type: "SET_CART",
-      value: { items: [...cart], cartId: data.cartId },
+      value: { items: [...cart], cartId: cart.id },
     });
 
     setUsername("");

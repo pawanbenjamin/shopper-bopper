@@ -31,7 +31,7 @@ ordersRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-// Create a order (cart) for a User
+// Create an Active Order (cart) for a User
 ordersRouter.post("/user/:userId", async (req, res, next) => {
   try {
     const order = await createOrderByUserId(req.params.userId);
@@ -45,6 +45,7 @@ ordersRouter.post("/user/:userId", async (req, res, next) => {
 ordersRouter.get("/user/:userId/cart", async (req, res, next) => {
   try {
     const cart = await getCart(req.params.userId);
+
     res.send(cart);
   } catch (error) {
     next(error);
@@ -61,7 +62,7 @@ ordersRouter.get("/user/:userId", async (req, res, next) => {
   }
 });
 
-ordersRouter.put("/:orderId", async (req, res, next) => {
+ordersRouter.put("/purchase/:orderId", async (req, res, next) => {
   try {
     const purchasedOrder = await purchaseCart(req.params.orderId);
     res.send(purchasedOrder);

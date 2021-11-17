@@ -4,11 +4,11 @@ const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const volleyball = require("volleyball");
+const morgan = require("morgan");
 
 const app = express();
 
-app.use(volleyball);
+app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env["COOKIE_SECRET"]));
