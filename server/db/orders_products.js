@@ -11,6 +11,7 @@ async function addToCart({ productId, orderId, qty }) {
         `,
     [productId, orderId, qty]
   );
+
   return order_product;
 }
 
@@ -25,7 +26,7 @@ async function removeFromCart({ productId, orderId }) {
     `,
     [productId, orderId]
   );
-  console.log("DB METHOD:", order_product);
+
   return order_product;
 }
 
@@ -34,12 +35,14 @@ async function updateQtyInCart({ productId, orderId, qty }) {
     rows: [order_product],
   } = await pool.query(
     `
-      UPDATE orders_products as op
+      UPDATE orders_products
         SET qty=$3
         WHERE "orderId"=$2 and "productId"=$1
+        RETURNING *
     `,
     [productId, orderId, qty]
   );
+
   return order_product;
 }
 

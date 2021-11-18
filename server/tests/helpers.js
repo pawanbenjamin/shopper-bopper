@@ -20,10 +20,10 @@ const createFakeUser = async (fakeUserData) => {
 const createFakeProduct = async (fakeProductData) => {
   if (fakeProductData === undefined) {
     fakeProductData = {
-      name: "Passion Fruit",
-      description: "A Tropical Delight",
-      price: 2999,
-      stockQty: 5,
+      name: "Pomegranate",
+      description: "Red Goodness",
+      price: 2345,
+      stockQty: 50,
     };
   }
 
@@ -57,4 +57,5 @@ module.exports = {
   createFakeProduct,
   createFakeOrder,
   createFakeEmptyOrder,
+  addFakeProductToOrder,
 };

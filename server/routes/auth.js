@@ -8,13 +8,13 @@ const {
   getCart,
 } = require("../db");
 
-const saltRounds = 10;
+const SALT_ROUNDS = 10;
 
 authRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const hash = await bcrypt.hash(password, saltRounds);
+    const hash = await bcrypt.hash(password, SALT_ROUNDS);
     const user = await createUser({ username, password: hash });
 
     delete user.password;

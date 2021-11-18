@@ -5,7 +5,6 @@ const { addToCart, removeFromCart, updateQtyInCart } = require("../db");
 // Add new item to cart
 orders_productsRouter.post("/", async (req, res, next) => {
   try {
-    console.log("REQ BODY", req.body);
     const order_product = await addToCart(req.body); // productId, orderId, qty
     res.send(order_product);
   } catch (error) {
@@ -24,7 +23,7 @@ orders_productsRouter.delete("/", async (req, res, next) => {
 });
 
 // Update qty in cart
-orders_productsRouter.put("/", async (req, res, next) => {
+orders_productsRouter.patch("/", async (req, res, next) => {
   try {
     const updated_op = await updateQtyInCart(req.body); // productId, orderId, qty
     res.send(updated_op);
