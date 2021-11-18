@@ -84,8 +84,9 @@ async function purchaseCart(orderId) {
   } = await pool.query(
     `
       UPDATE orders
-        SET isActive=true
+        SET isActive=false
         WHERE id=$1
+        RETURNING *
     `,
     [orderId]
   );
@@ -93,13 +94,17 @@ async function purchaseCart(orderId) {
 }
 
 async function deleteOrderById(orderId) {
-  const deletedOrder = await pool.query(
+  const {
+    rows: [deletedOrder],
+  } = await pool.query(
     `
       DELETE FROM orders
         WHERE id=$1
+        RETURNING *
     `,
     [orderId]
   );
+
   return deletedOrder;
 }
 

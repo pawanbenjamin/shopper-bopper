@@ -47,8 +47,14 @@ const addFakeProductToOrder = async (orderId, productId, qty) => {
   return await addToCart({ productId, orderId, qty });
 };
 
+const createFakeEmptyOrder = async (userId) => {
+  const order = await createOrderByUserId(userId);
+  return order;
+};
+
 module.exports = {
   createFakeUser,
   createFakeProduct,
   createFakeOrder,
+  createFakeEmptyOrder,
 };

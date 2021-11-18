@@ -9,6 +9,7 @@ const {
 } = require("../db");
 
 // Get All Products
+// api/products
 productsRouter.get("/", async (req, res, next) => {
   try {
     const products = await getAllProducts();
