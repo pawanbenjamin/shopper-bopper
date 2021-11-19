@@ -13,7 +13,7 @@ function Cart(props) {
 
       cartDispatch({
         type: "SET_CART",
-        value: { items: [...data], cartId: data.userId },
+        value: data,
       });
     }
     if (userState.id) {
@@ -27,7 +27,7 @@ function Cart(props) {
     cartState.items.map((item) => {
       return (
         <>
-          <h3>{item.name}</h3>
+          <h3>{item.productName}</h3>
           <h4>{item.price}</h4>
           <h5>{item.qty}</h5>
         </>

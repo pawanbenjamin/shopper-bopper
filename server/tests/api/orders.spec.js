@@ -9,7 +9,7 @@ const {
   createFakeEmptyOrder,
 } = require("../helpers");
 
-const { objectContaining } = expect;
+const { objectContaining, arrayContaining } = expect;
 
 describe("API/ORDERS TESTS", () => {
   describe("POST t/api/orders", () => {
@@ -64,7 +64,7 @@ describe("API/ORDERS TESTS", () => {
       expect(response.status).toEqual(200);
       expect(response.body).toEqual(
         objectContaining({
-          isactive: true,
+          isActive: true,
           userId: id,
         })
       );
@@ -102,7 +102,7 @@ describe("API/ORDERS TESTS", () => {
         .set("Cookie", process.env["TEST_COOKIE"]);
 
       expect(response.status).toEqual(200);
-      expect(response.body).toEqual(
+      expect(response.body[0]).toEqual(
         objectContaining({
           orderId: order.id,
           userId: id,

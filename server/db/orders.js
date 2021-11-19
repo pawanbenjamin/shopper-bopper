@@ -16,66 +16,133 @@ async function createOrderByUserId(userId) {
 
 async function getAllOrders() {
   const { rows } = await pool.query(`
-      SELECT * FROM orders
+    SELECT 
+      orders.id as "orderId",
+      orders."userId" as "userId",
+      orders.isactive as "isActive",
+      orders_products."productId" as "productId",
+      orders_products.qty as "qty",
+      products.name as "productName",
+      products.description as "description",
+      products.price as "price"
+    FROM orders
+    JOIN orders_products 
+    ON orders.id = orders_products."orderId"
+    JOIN products
+    ON orders_products."productId" = products.id
     `);
-  return rows;
+  return mapTheRows(rows);
+}
+
+function mapTheRows(rows) {
+  const mappedOrders = {};
+
+  for (const row of rows) {
+    if (!mappedOrders[row.orderId]) {
+      mappedOrders[row.orderId] = {
+        orderId: row.orderId,
+        userId: row.userId,
+        isActive: row.isActive,
+        items: [],
+      };
+      if (row.productId) {
+        mappedOrders[row.orderId].items.push({
+          productId: row.productId,
+          qty: row.qty,
+          productName: row.productName,
+          description: row.description,
+          price: row.price,
+        });
+      }
+    } else {
+      if (row.productId) {
+        mappedOrders[row.orderId].items.push({
+          productId: row.productId,
+          qty: row.qty,
+          productName: row.productName,
+          description: row.description,
+          price: row.price,
+        });
+      }
+    }
+  }
+  return Object.values(mappedOrders);
 }
 
 async function getOrderById(orderId) {
-  const {
-    rows: [order],
-  } = await pool.query(
+  const { rows } = await pool.query(
     `
-    SELECT *
-          FROM orders 
-          INNER JOIN orders_products as op
-            ON op."orderId" = orders.id
-          INNER JOIN products as p
-          	ON op."productId" = p.id  
-     	    WHERE orders.id = $1 
+      SELECT 
+        orders.id as "orderId",
+        orders."userId" as "userId",
+        orders.isactive as "isActive",
+        orders_products."productId" as "productId",
+        orders_products.qty as "qty",
+        products.name as "productName",
+        products.description as "description",
+        products.price as "price"
+      FROM orders
+      JOIN orders_products 
+      ON orders.id = orders_products."orderId"
+      JOIN products
+      ON orders_products."productId" = products.id 
+     	WHERE orders.id = $1 
     `,
     [orderId]
   );
-  return order;
+
+  const [mappedOrder] = mapTheRows(rows);
+  return mappedOrder;
 }
 
 async function getAllOrdersByUserId(userId) {
-  const {
-    rows: [orders],
-  } = await pool.query(
+  const { rows } = await pool.query(
     `
-        SELECT * FROM orders 
-        INNER JOIN orders_products as op
-            ON op."orderId" = orders.id
-          INNER JOIN products as p
-          	ON op."productId" = p.id  
-     	    WHERE orders."userId" = $1   
+      SELECT 
+        orders.id as "orderId",
+        orders."userId" as "userId",
+        orders.isactive as "isActive",
+        orders_products."productId" as "productId",
+        orders_products.qty as "qty",
+        products.name as "productName",
+        products.description as "description",
+        products.price as "price"
+      FROM orders
+      JOIN orders_products 
+      ON orders.id = orders_products."orderId"
+      JOIN products
+      ON orders_products."productId" = products.id 
+     	WHERE orders."userId" = $1   
     `,
     [userId]
   );
-  return orders;
+  return mapTheRows(rows);
 }
 
 // Get Cart (order that is active) and include everything
 async function getCart(userId) {
-  const {
-    rows: [cart],
-  } = await pool.query(
+  const { rows } = await pool.query(
     `
-    SELECT orders."userId", orders.id as orderId, 
-    op."productId", op.qty, p.name, p.description, 
-    p.price, p.stockqty, orders.isactive
-          FROM orders 
-          INNER JOIN orders_products as op
-            ON op."orderId" = orders.id
-          INNER JOIN products as p
-          	ON op."productId" = p.id  
-     	    WHERE orders."userId" = $1 and orders.isActive = true 
+    SELECT 
+      orders.id as "orderId",
+      orders."userId" as "userId",
+      orders.isactive as "isActive",
+      orders_products."productId" as "productId",
+      orders_products.qty as "qty",
+      products.name as "productName",
+      products.description as "description",
+      products.price as "price"
+    FROM orders
+    JOIN orders_products 
+    ON orders.id = orders_products."orderId"
+    JOIN products
+    ON orders_products."productId" = products.id 
+    WHERE orders."userId" = $1 and orders.isActive = true 
     `,
     [userId]
   );
-
-  return cart;
+  const [mappedOrder] = mapTheRows(rows);
+  return mappedOrder;
 }
 
 async function purchaseCart(orderId) {
