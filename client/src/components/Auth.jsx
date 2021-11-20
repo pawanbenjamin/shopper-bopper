@@ -5,9 +5,8 @@ import { cartContext } from "../context/cartContext";
 import axios from "axios";
 
 function Auth({ setIsLoggedIn }) {
-  const { userDispatch } = useContext(userContext);
-  const { cartDispatch } = useContext(cartContext);
-
+  const { cartState, cartDispatch } = useContext(cartContext);
+  const { userState, userDispatch } = useContext(userContext);
   const { pathname } = useLocation();
   const history = useHistory();
 
