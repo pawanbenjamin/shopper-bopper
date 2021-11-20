@@ -35,7 +35,7 @@ ordersRouter.get("/:id", async (req, res, next) => {
 ordersRouter.get("/user/:userId/cart", async (req, res, next) => {
   try {
     const cart = await getCart(req.params.userId);
-
+    console.log("CART IN ROUTE", cart);
     res.send(cart);
   } catch (error) {
     next(error);

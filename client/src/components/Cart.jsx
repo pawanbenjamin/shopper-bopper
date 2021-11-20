@@ -10,7 +10,7 @@ function Cart(props) {
   useEffect(() => {
     async function getCart() {
       const { data } = await axios.get(`/api/orders/user/${userState.id}/cart`);
-
+      console.log("GET CART USE EFFECT", data);
       cartDispatch({
         type: "SET_CART",
         value: data,
@@ -21,18 +21,18 @@ function Cart(props) {
     }
   }, []);
 
-  const products =
-    cartState.items &&
-    cartState.items.length &&
-    cartState.items.map((item) => {
-      return (
-        <>
-          <h3>{item.productName}</h3>
-          <h4>{item.price}</h4>
-          <h5>{item.qty}</h5>
-        </>
-      );
-    });
+  const products = "";
+  // cartState.items &&
+  // cartState.items.length &&
+  // cartState.items.map((item) => {
+  //   return (
+  //     <>
+  //       <h3>{item.productName}</h3>
+  //       <h4>{item.price}</h4>
+  //       <h5>{item.qty}</h5>
+  //     </>
+  //   );
+  // });
 
   return <div>{products ? products : <span>Nothing in Your Cart!</span>}</div>;
 }

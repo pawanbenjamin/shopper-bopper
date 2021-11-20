@@ -1,4 +1,6 @@
 const pool = require("./pool");
+const { createOrderByUserId } = require("./orders");
+const { getCart } = require("./orders");
 
 async function createUser({ username, password }) {
   const {
@@ -37,6 +39,10 @@ async function loginUser(username) {
     `,
     [username]
   );
+
+  const cart = await getCart(user.id);
+  user.cart = cart;
+
   return user;
 }
 

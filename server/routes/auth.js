@@ -16,6 +16,7 @@ authRouter.post("/register", async (req, res, next) => {
 
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
     const user = await createUser({ username, password: hash });
+    await createOrderByUserId(user.id);
 
     delete user.password;
 
@@ -26,9 +27,6 @@ authRouter.post("/register", async (req, res, next) => {
       httpOnly: true,
       signed: true,
     });
-
-    const cart = await createOrderByUserId(user.id);
-    user.cartId = cart.id;
 
     res.send(user);
   } catch (error) {
@@ -54,11 +52,6 @@ authRouter.post("/login", async (req, res, next) => {
           signed: true,
         });
 
-        // const cart = await getCart(user.id);
-        // console.log("CART INSIDE EXPRESS ROUTE", cart);
-        // if (cart.id) {
-        //   user.cartId = cart.id;
-        // }
         res.send(user);
       } else {
         res.status(400).json({ error: "Invalid Password" });

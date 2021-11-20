@@ -1,9 +1,7 @@
 const pool = require("./pool");
 
 async function createOrderByUserId(userId) {
-  const {
-    rows: [order],
-  } = await pool.query(
+  const { rows } = await pool.query(
     `
             INSERT INTO orders("userId")
                 VALUES($1)
@@ -11,15 +9,19 @@ async function createOrderByUserId(userId) {
         `,
     [userId]
   );
-  return order;
+
+  console.log("ROWWWWSSSS", rows);
+  const [cart] = mapTheRows(rows);
+  console.log("CART", cart);
+  return cart;
 }
 
 async function getAllOrders() {
   const { rows } = await pool.query(`
     SELECT 
-      orders.id as "orderId",
+      orders.id,
       orders."userId" as "userId",
-      orders.isactive as "isActive",
+      orders."isActive",
       orders_products."productId" as "productId",
       orders_products.qty as "qty",
       products.name as "productName",
@@ -38,15 +40,15 @@ function mapTheRows(rows) {
   const mappedOrders = {};
 
   for (const row of rows) {
-    if (!mappedOrders[row.orderId]) {
-      mappedOrders[row.orderId] = {
-        orderId: row.orderId,
+    if (!mappedOrders[row.id]) {
+      mappedOrders[row.id] = {
+        orderId: row.id,
         userId: row.userId,
         isActive: row.isActive,
         items: [],
       };
       if (row.productId) {
-        mappedOrders[row.orderId].items.push({
+        mappedOrders[row.id].items.push({
           productId: row.productId,
           qty: row.qty,
           productName: row.productName,
@@ -56,7 +58,7 @@ function mapTheRows(rows) {
       }
     } else {
       if (row.productId) {
-        mappedOrders[row.orderId].items.push({
+        mappedOrders[row.id].items.push({
           productId: row.productId,
           qty: row.qty,
           productName: row.productName,
@@ -73,9 +75,9 @@ async function getOrderById(orderId) {
   const { rows } = await pool.query(
     `
       SELECT 
-        orders.id as "orderId",
+        orders.id,
         orders."userId" as "userId",
-        orders.isactive as "isActive",
+        orders."isActive",
         orders_products."productId" as "productId",
         orders_products.qty as "qty",
         products.name as "productName",
@@ -99,9 +101,9 @@ async function getAllOrdersByUserId(userId) {
   const { rows } = await pool.query(
     `
       SELECT 
-        orders.id as "orderId",
+        orders.id,
         orders."userId" as "userId",
-        orders.isactive as "isActive",
+        orders."isActive",
         orders_products."productId" as "productId",
         orders_products.qty as "qty",
         products.name as "productName",
@@ -124,9 +126,9 @@ async function getCart(userId) {
   const { rows } = await pool.query(
     `
     SELECT 
-      orders.id as "orderId",
+      orders.id,
       orders."userId" as "userId",
-      orders.isactive as "isActive",
+      orders."isActive",
       orders_products."productId" as "productId",
       orders_products.qty as "qty",
       products.name as "productName",
@@ -137,7 +139,7 @@ async function getCart(userId) {
     ON orders.id = orders_products."orderId"
     JOIN products
     ON orders_products."productId" = products.id 
-    WHERE orders."userId" = $1 and orders.isActive = true 
+    WHERE orders."userId" = $1 and orders."isActive" = true 
     `,
     [userId]
   );
@@ -151,7 +153,7 @@ async function purchaseCart(orderId) {
   } = await pool.query(
     `
       UPDATE orders
-        SET isActive=false
+        SET "isActive"=false
         WHERE id=$1
         RETURNING *
     `,

@@ -24,14 +24,6 @@ function Auth({ setIsLoggedIn }) {
 
     userDispatch({ type: "SET_USER", value: data });
 
-    const cartResponse = await axios.get(`/api/orders/user/${data.id}/cart`);
-    const cart = await cartResponse.data;
-
-    cartDispatch({
-      type: "SET_CART",
-      value: { items: [...cart], cartId: cart.id },
-    });
-
     setUsername("");
     setPassword("");
     setIsLoggedIn(true);

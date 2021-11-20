@@ -15,26 +15,16 @@ function Products(props) {
       setProducts(data);
     }
     getProducts();
-    console.log(userState);
   }, []);
 
   async function addToCart(productId) {
-    if (userState.id) {
-      const item = cartState.items.filter((item) => item.id === productId);
-      if (item.length) {
-        await axios.put(`/api/orders_products/`, {
-          productId,
-          orderId: userState.cartId,
-          qty: item.qty + 1,
-        });
-      } else {
-        await axios.post(`/api/orders_products/`, {
-          productId,
-          orderId: userState.cartId,
-          qty: 1,
-        });
-      }
-    }
+    console.log("adding to cart");
+    await axios.post("/api/orders_products", {
+      productId,
+      orderId: userState.cart.orderId,
+      qty: 1,
+    });
+    console.log("Added to cart!");
   }
 
   const prods = products.map((product) => {
@@ -45,12 +35,8 @@ function Products(props) {
           <li>{product.description}</li>
           <li>{product.price}</li>
         </ul>
-        {cartState.items &&
-        cartState.items.filter((item) => item.id === product.id).length ? (
-          <h1>Already in Cart</h1>
-        ) : (
-          <button onClick={() => addToCart(product.id)}>Add to Cart</button>
-        )}
+
+        <button onClick={() => addToCart(product.id)}>Add to Cart</button>
       </div>
     );
   });

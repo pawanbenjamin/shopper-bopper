@@ -9,11 +9,7 @@ const CartProvider = ({ children }) => {
   const [cartState, cartDispatch] = useReducer((oldState, action) => {
     switch (action.type) {
       case "SET_CART": {
-        const newState = {
-          orderId: action.value.cartId,
-          items: [...action.value.items],
-        };
-        return newState;
+        return action.value;
       }
       case "CLEAR_CART": {
         return initialState;

@@ -31,7 +31,7 @@ async function buildTables() {
       CREATE TABLE orders(
         id SERIAL PRIMARY KEY,
         "userId" INTEGER REFERENCES users(id),
-        isActive BOOLEAN DEFAULT true
+        "isActive" BOOLEAN DEFAULT true
       );
         `);
 
