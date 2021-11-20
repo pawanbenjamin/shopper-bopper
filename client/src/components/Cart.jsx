@@ -9,18 +9,18 @@ function Cart(props) {
 
   useEffect(() => {}, []);
 
-  const products = "";
-  // cartState.items &&
-  // cartState.items.length &&
-  // cartState.items.map((item) => {
-  //   return (
-  //     <>
-  //       <h3>{item.productName}</h3>
-  //       <h4>{item.price}</h4>
-  //       <h5>{item.qty}</h5>
-  //     </>
-  //   );
-  // });
+  const products =
+    cartState.items &&
+    cartState.items.length &&
+    cartState.items.map((item) => {
+      return (
+        <>
+          <h3>{item.productName}</h3>
+          <h4>{item.price}</h4>
+          <h5>{item.qty}</h5>
+        </>
+      );
+    });
 
   return <div>{products ? products : <span>Nothing in Your Cart!</span>}</div>;
 }

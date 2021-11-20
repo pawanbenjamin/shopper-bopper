@@ -18,13 +18,17 @@ function Products(props) {
   }, []);
 
   async function addToCart(productId) {
-    console.log("adding to cart");
-    await axios.post("/api/orders_products", {
-      productId,
-      orderId: userState.cart.orderId,
-      qty: 1,
-    });
-    console.log("Added to cart!");
+    if (userState.id) {
+      console.log("adding to cart");
+      await axios.post("/api/orders_products", {
+        productId,
+        orderId: cartState.orderId,
+        qty: 1,
+      });
+      const { data } = await axios.get(`/api/orders/user/${userState.id}/cart`);
+      cartDispatch({ type: "SET_CART", value: data });
+      console.log("Added to cart!");
+    }
   }
 
   const prods = products.map((product) => {
@@ -35,8 +39,20 @@ function Products(props) {
           <li>{product.description}</li>
           <li>{product.price}</li>
         </ul>
-
-        <button onClick={() => addToCart(product.id)}>Add to Cart</button>
+        {cartState.items &&
+          cartState.items
+            .filter((item) => item.productId === product.id)
+            .map((item) => {
+              return <h1>Already in Cart</h1>;
+            })}
+        {cartState.items ? (
+          cartState.items.filter((item) => item.productId === product.id)
+            .length === 0 ? (
+            <button onClick={() => addToCart(product.id)}>Add To Cart</button>
+          ) : null
+        ) : (
+          <button onClick={() => addToCart(product.id)}>Add To Cart</button>
+        )}
       </div>
     );
   });
