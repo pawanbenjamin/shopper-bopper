@@ -16,7 +16,7 @@ authRouter.post("/register", async (req, res, next) => {
 
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
     const user = await createUser({ username, password: hash });
-    await createOrderByUserId(user.id);
+    const cart = await createOrderByUserId(user.id);
 
     delete user.password;
 
@@ -28,7 +28,7 @@ authRouter.post("/register", async (req, res, next) => {
       signed: true,
     });
 
-    res.send(user);
+    res.send({ user, cart });
   } catch (error) {
     next(error);
   }
@@ -44,6 +44,8 @@ authRouter.post("/login", async (req, res, next) => {
       if (validPassword) {
         delete user.password;
 
+        const cart = await getCart(user.id);
+
         const token = jwt.sign(user, process.env["JWT_SECRET"]);
 
         res.cookie("token", token, {
@@ -52,7 +54,7 @@ authRouter.post("/login", async (req, res, next) => {
           signed: true,
         });
 
-        res.send(user);
+        res.send({ user, cart });
       } else {
         res.status(400).json({ error: "Invalid Password" });
       }

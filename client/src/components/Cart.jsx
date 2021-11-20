@@ -7,19 +7,7 @@ function Cart(props) {
   const { cartState, cartDispatch } = useContext(cartContext);
   const { userState } = useContext(userContext);
 
-  useEffect(() => {
-    async function getCart() {
-      const { data } = await axios.get(`/api/orders/user/${userState.id}/cart`);
-      console.log("GET CART USE EFFECT", data);
-      cartDispatch({
-        type: "SET_CART",
-        value: data,
-      });
-    }
-    if (userState.id) {
-      getCart();
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   const products = "";
   // cartState.items &&

@@ -40,9 +40,6 @@ async function loginUser(username) {
     [username]
   );
 
-  const cart = await getCart(user.id);
-  user.cart = cart;
-
   return user;
 }
 

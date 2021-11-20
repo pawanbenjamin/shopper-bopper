@@ -22,7 +22,8 @@ function Auth({ setIsLoggedIn }) {
       password: password,
     });
 
-    userDispatch({ type: "SET_USER", value: data });
+    userDispatch({ type: "SET_USER", value: data.user });
+    cartDispatch({ type: "SET_CART", value: data.cart });
 
     setUsername("");
     setPassword("");

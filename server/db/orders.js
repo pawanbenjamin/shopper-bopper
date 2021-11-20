@@ -84,15 +84,16 @@ async function getOrderById(orderId) {
         products.description as "description",
         products.price as "price"
       FROM orders
-      JOIN orders_products 
+      FULL JOIN orders_products 
       ON orders.id = orders_products."orderId"
-      JOIN products
+      FULL JOIN products
       ON orders_products."productId" = products.id 
      	WHERE orders.id = $1 
     `,
     [orderId]
   );
 
+  console.log(rows);
   const [mappedOrder] = mapTheRows(rows);
   return mappedOrder;
 }
@@ -135,9 +136,9 @@ async function getCart(userId) {
       products.description as "description",
       products.price as "price"
     FROM orders
-    JOIN orders_products 
+    FULL JOIN orders_products 
     ON orders.id = orders_products."orderId"
-    JOIN products
+    FULL JOIN products
     ON orders_products."productId" = products.id 
     WHERE orders."userId" = $1 and orders."isActive" = true 
     `,
