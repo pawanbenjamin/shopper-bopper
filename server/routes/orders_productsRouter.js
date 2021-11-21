@@ -13,9 +13,13 @@ orders_productsRouter.post("/", async (req, res, next) => {
 });
 
 // Delete item from cart
-orders_productsRouter.delete("/", async (req, res, next) => {
+orders_productsRouter.delete("/:orderId/:productId", async (req, res, next) => {
   try {
-    const deletedOrderProduct = await removeFromCart(req.body); // productId, orderId
+    const deletedOrderProduct = await removeFromCart({
+      productId: req.params.productId,
+      orderId: req.params.orderId,
+    }); // productId, orderId
+    console.log("DELETED ORDER PRODUCUT", deletedOrderProduct);
     res.send(deletedOrderProduct);
   } catch (error) {
     next(error);

@@ -20,9 +20,22 @@ function Auth({ setIsLoggedIn }) {
       username: username,
       password: password,
     });
+    console.log("CART : : : : : : ", data.cart);
 
     userDispatch({ type: "SET_USER", value: data.user });
-    cartDispatch({ type: "SET_CART", value: data.cart });
+    if (cartState.items.length) {
+      cartDispatch({
+        type: "SET_CART",
+        value: {
+          items: cartState.items,
+          orderId: data.cart.orderId,
+          userId: data.user.id,
+          isActive: data.cart.isActive,
+        },
+      });
+    } else {
+      cartDispatch({ type: "SET_CART", value: data.cart });
+    }
 
     setUsername("");
     setPassword("");

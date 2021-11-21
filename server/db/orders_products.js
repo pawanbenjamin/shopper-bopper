@@ -16,9 +16,7 @@ async function addToCart({ productId, orderId, qty }) {
 }
 
 async function removeFromCart({ productId, orderId }) {
-  const {
-    rows: [order_product],
-  } = await pool.query(
+  const { rows } = await pool.query(
     `
       DELETE FROM orders_products as op
           WHERE op."productId"=$1 and op."orderId"=$2
@@ -27,7 +25,9 @@ async function removeFromCart({ productId, orderId }) {
     [productId, orderId]
   );
 
-  return order_product;
+  console.log("THIS SHOULD BE THE DELETED THRU TABLE", rows);
+
+  return rows[0];
 }
 
 async function updateQtyInCart({ productId, orderId, qty }) {

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { cartContext } from "../context/cartContext";
 import { userContext } from "../context/userContext";
 
-function Products({ isLoggedIn }) {
+function Products() {
   const { cartState, cartDispatch } = useContext(cartContext);
   const { userState } = useContext(userContext);
 
@@ -18,7 +18,7 @@ function Products({ isLoggedIn }) {
   }, []);
 
   async function addToCart(product) {
-    if (isLoggedIn) {
+    if (userState.id) {
       console.log("adding to cart");
       await axios.post("/api/orders_products", {
         productId: product.id,
@@ -28,17 +28,18 @@ function Products({ isLoggedIn }) {
       const { data } = await axios.get(`/api/orders/user/${userState.id}/cart`);
       cartDispatch({ type: "SET_CART", value: data });
       console.log("Added to cart!");
+    } else {
+      cartDispatch({
+        type: "ADD_TO_CART",
+        value: {
+          description: product.description,
+          price: product.price,
+          productId: product.id,
+          productName: product.name,
+          qty: 1,
+        },
+      });
     }
-    cartDispatch({
-      type: "ADD_TO_CART",
-      value: {
-        description: product.description,
-        price: product.price,
-        productId: product.id,
-        productName: product.name,
-        qty: 1,
-      },
-    });
   }
 
   const prods = products.map((product) => {

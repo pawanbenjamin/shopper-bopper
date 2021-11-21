@@ -20,6 +20,15 @@ const CartProvider = ({ children }) => {
         };
         return newState;
       }
+      case "REMOVE_FROM_CART": {
+        const newItems = oldState.items.filter(
+          (item) => item.productId !== action.value.productId
+        );
+        const newState = {
+          items: [...newItems],
+        };
+        return newState;
+      }
       default:
         throw new Error();
     }
