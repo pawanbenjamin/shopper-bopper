@@ -25,11 +25,11 @@
     "faker": "^5.5.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
-    "volleyball": "^1.5.1"
+    "volleyball": "^1.5.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "jest": "^27.3.1",
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.14",
     "supertest": "^6.1.6"
   }
