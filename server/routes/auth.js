@@ -6,18 +6,30 @@ const {
   loginUser,
   createOrderByUserId,
   getCart,
+  addToCart,
 } = require("../db");
 
 const SALT_ROUNDS = 10;
 
 authRouter.post("/register", async (req, res, next) => {
+  console.log("req.body", req.body);
   try {
-    const { username, password } = req.body;
+    const { username, password, items } = req.body;
 
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
     const user = await createUser({ username, password: hash });
     const cart = await createOrderByUserId(user.id);
+    if (items) {
+      items.forEach(async (item) => {
+        await addToCart({
+          productId: item.productId,
+          orderId: cart.orderId,
+          qty: item.qty,
+        });
+      });
+    }
 
+    const newCart = await getCart(user.id);
     delete user.password;
 
     const token = jwt.sign(user, process.env["JWT_SECRET"]);
@@ -28,7 +40,7 @@ authRouter.post("/register", async (req, res, next) => {
       signed: true,
     });
 
-    res.send({ user, cart });
+    res.send({ user, cart: newCart });
   } catch (error) {
     next(error);
   }

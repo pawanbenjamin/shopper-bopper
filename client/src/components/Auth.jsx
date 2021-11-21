@@ -19,6 +19,7 @@ function Auth({ setIsLoggedIn }) {
     const { data } = await axios.post(`/auth${pathname}`, {
       username: username,
       password: password,
+      ...(cartState.items.length && { items: cartState.items }),
     });
     console.log("CART : : : : : : ", data.cart);
 
