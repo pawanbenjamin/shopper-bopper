@@ -68,7 +68,7 @@ function Cart(props) {
     cartState.items.length &&
     cartState.items.map((item) => {
       return (
-        <>
+        <div key={item.productId}>
           <h3>{item.productName}</h3>
           <h4>${item.price / 100}</h4>
           <h5>{item.qty}</h5>
@@ -84,7 +84,7 @@ function Cart(props) {
           <button onClick={() => decreaseQty(item.productId, item.qty - 1)}>
             -
           </button>
-        </>
+        </div>
       );
     });
 

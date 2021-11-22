@@ -15,7 +15,6 @@ function Nav({ isLoggedIn, setIsLoggedIn }) {
     setIsLoggedIn(false);
   };
 
-  console.log(userDispatch);
   return (
     <div>
       {userState.id ? <h3>Welcome {userState.username}</h3> : null}

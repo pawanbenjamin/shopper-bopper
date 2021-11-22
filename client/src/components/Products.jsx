@@ -54,7 +54,7 @@ function Products() {
           cartState.items
             .filter((item) => item.productId === product.id)
             .map((item) => {
-              return <h6>Added to Cart!</h6>;
+              return <h6 key={item.productId}>Added to Cart!</h6>;
             })}
         {cartState.items ? (
           cartState.items.filter((item) => item.productId === product.id)
