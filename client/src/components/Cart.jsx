@@ -70,7 +70,7 @@ function Cart(props) {
       return (
         <>
           <h3>{item.productName}</h3>
-          <h4>{item.price}</h4>
+          <h4>${item.price / 100}</h4>
           <h5>{item.qty}</h5>
           <button
             onClick={() => removeFromCart(item.productId, cartState.orderId)}
@@ -88,7 +88,21 @@ function Cart(props) {
       );
     });
 
-  return <div>{products ? products : <span>Nothing in Your Cart!</span>}</div>;
+  const total =
+    cartState.items &&
+    cartState.items.length &&
+    cartState.items
+      .map((item) => {
+        return item.price * item.qty;
+      })
+      .reduce((prevTotal, currTotal) => prevTotal + currTotal);
+
+  return (
+    <div>
+      {products ? products : <span>Nothing in Your Cart!</span>}
+      <h3>Cart Total: ${total / 100}</h3>
+    </div>
+  );
 }
 
 export default Cart;
