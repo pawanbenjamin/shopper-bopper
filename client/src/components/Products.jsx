@@ -48,13 +48,13 @@ function Products() {
         <h2>{product.name}</h2>
         <ul>
           <li>{product.description}</li>
-          <li>{product.price}</li>
+          <li>${product.price / 100}</li>
         </ul>
         {cartState.items &&
           cartState.items
             .filter((item) => item.productId === product.id)
             .map((item) => {
-              return <h6>Already in Cart</h6>;
+              return <h6>Added to Cart!</h6>;
             })}
         {cartState.items ? (
           cartState.items.filter((item) => item.productId === product.id)

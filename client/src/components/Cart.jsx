@@ -24,6 +24,45 @@ function Cart(props) {
     }
   };
 
+  const increaseQty = async (productId, qty) => {
+    if (userState.id) {
+      const { data } = await axios.patch("/api/orders_products", {
+        productId,
+        orderId: cartState.orderId,
+        qty,
+      });
+      const response = await axios.get(`/api/orders/user/${userState.id}/cart`);
+
+      cartDispatch({ type: "SET_CART", value: response.data });
+    } else {
+      cartDispatch({
+        type: "CHANGE_QTY",
+        value: { productId, qty },
+      });
+    }
+  };
+
+  const decreaseQty = async (productId, qty) => {
+    if (qty === 0) {
+      await removeFromCart(productId, cartState.orderId);
+    }
+    if (userState.id) {
+      const { data } = await axios.patch("/api/orders_products", {
+        productId,
+        orderId: cartState.orderId,
+        qty,
+      });
+      const response = await axios.get(`/api/orders/user/${userState.id}/cart`);
+
+      cartDispatch({ type: "SET_CART", value: response.data });
+    } else {
+      cartDispatch({
+        type: "CHANGE_QTY",
+        value: { productId, qty },
+      });
+    }
+  };
+
   const products =
     cartState.items &&
     cartState.items.length &&
@@ -39,8 +78,12 @@ function Cart(props) {
             Remove from Cart
           </button>
           <span>QTY</span>
-          <button>+</button>
-          <button>-</button>
+          <button onClick={() => increaseQty(item.productId, item.qty + 1)}>
+            +
+          </button>
+          <button onClick={() => decreaseQty(item.productId, item.qty - 1)}>
+            -
+          </button>
         </>
       );
     });

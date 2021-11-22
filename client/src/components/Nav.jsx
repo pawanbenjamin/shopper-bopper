@@ -6,7 +6,7 @@ import { userContext } from "../context/userContext";
 
 function Nav({ isLoggedIn, setIsLoggedIn }) {
   const { userState, userDispatch } = useContext(userContext);
-  const { cartDispatch } = useContext(cartContext);
+  const { cartState, cartDispatch } = useContext(cartContext);
 
   const handleLogout = async () => {
     await axios.post("/auth/logout");
@@ -28,7 +28,9 @@ function Nav({ isLoggedIn, setIsLoggedIn }) {
           <NavLink to="/login">Login</NavLink>
         </>
       )}
-      <NavLink to="/cart">Cart</NavLink>
+      <NavLink to="/cart">
+        Cart({cartState.items && cartState.items.length})
+      </NavLink>
     </div>
   );
 }
