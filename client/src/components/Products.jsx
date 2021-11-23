@@ -47,7 +47,7 @@ function Products() {
     return (
       <div key={product.id}>
         <h2>{product.name}</h2>
-        <img src={process.env.PUBLIC_URL + product.imageUrl} />
+        <img src={product.imageUrl} />
         <ul>
           <li>{product.description}</li>
           <li>${product.price / 100}</li>

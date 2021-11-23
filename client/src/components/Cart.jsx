@@ -68,7 +68,7 @@ function Cart(props) {
     cartState.items.length &&
     cartState.items.map((item) => {
       return (
-        <div key={process.env.PUBLIC_URL + item.productId}>
+        <div key={item.productId}>
           <img src={item.imageUrl} />
           <h3>{item.productName}</h3>
           <h4>${item.price / 100}</h4>
