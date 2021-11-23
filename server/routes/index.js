@@ -15,11 +15,11 @@ const authRequired = (req, res, next) => {
   next();
 };
 
-apiRouter.use("/users", /*authRequired,*/ require("./usersRouter"));
+apiRouter.use("/users", authRequired, require("./usersRouter"));
 
 apiRouter.use("/products", require("./productsRouter"));
 
-apiRouter.use("/orders", /*authRequired,*/ require("./ordersRouter"));
+apiRouter.use("/orders", authRequired, require("./ordersRouter"));
 
 apiRouter.use("/orders_products", require("./orders_productsRouter"));
 

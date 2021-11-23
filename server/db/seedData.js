@@ -43,7 +43,8 @@ async function buildTables() {
           name VARCHAR(255) UNIQUE NOT NULL,
           description TEXT,
           price INTEGER,
-          stockQty INTEGER
+          "stockQty" INTEGER,
+          "imageUrl" TEXT
         );
       `);
 
@@ -104,24 +105,28 @@ async function seedDb() {
       description: "The most yellow of fruit",
       price: 299,
       stockQty: 100,
+      imageUrl: "/banana.jpg",
     },
     {
       name: "Apple",
       description: "A red one",
       price: 199,
       stockQty: 100,
+      imageUrl: "/apple.jpg",
     },
     {
       name: "Pineapple",
       description: "Yellow, pretty much",
       price: 299,
       stockQty: 300,
+      imageUrl: "/pineapple.jpg",
     },
     {
       name: "Passion Fruit",
       description: "A Tropical Delight",
       price: 2999,
       stockQty: 5,
+      imageUrl: "/passion.jpg",
     },
   ];
 

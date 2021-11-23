@@ -37,6 +37,7 @@ function Products() {
           productId: product.id,
           productName: product.name,
           qty: 1,
+          imageUrl: product.imageUrl,
         },
       });
     }
@@ -46,6 +47,7 @@ function Products() {
     return (
       <div key={product.id}>
         <h2>{product.name}</h2>
+        <img src={product.imageUrl} />
         <ul>
           <li>{product.description}</li>
           <li>${product.price / 100}</li>

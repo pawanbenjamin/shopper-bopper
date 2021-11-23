@@ -1,15 +1,15 @@
 const pool = require("./pool");
 
-async function createProduct({ name, description, price, stockQty }) {
+async function createProduct({ name, description, price, stockQty, imageUrl }) {
   const {
     rows: [product],
   } = await pool.query(
     `
-            INSERT INTO products(name, description, price, stockQty)
-                VALUES ($1, $2, $3, $4)
+            INSERT INTO products(name, description, price, "stockQty", "imageUrl")
+                VALUES ($1, $2, $3, $4, $5)
                 RETURNING * 
         `,
-    [name, description, price, stockQty]
+    [name, description, price, stockQty, imageUrl]
   );
   return product;
 }
@@ -34,17 +34,24 @@ async function getProductById(productId) {
   return product;
 }
 
-async function updateProduct({ name, description, price, stockQty, id }) {
+async function updateProduct({
+  name,
+  description,
+  price,
+  stockQty,
+  id,
+  imageUrl,
+}) {
   const {
     rows: [product],
   } = await pool.query(
     `
           UPDATE products
-            SET name = $1, description = $2, price = $3, stockQty = $4
+            SET name = $1, description = $2, price = $3, "stockQty" = $4, "imageUrl" = $5
             WHERE id=$5
             RETURNING *
     `,
-    [name, description, price, stockQty, id]
+    [name, description, price, stockQty, id, imageUrl]
   );
   return product;
 }
