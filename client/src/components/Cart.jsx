@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useContext } from "react";
 import { cartContext } from "../context/cartContext";
 import { userContext } from "../context/userContext";
-
+const url = window.location.origin;
 function Cart(props) {
   const { cartState, cartDispatch } = useContext(cartContext);
   const { userState } = useContext(userContext);
@@ -69,7 +69,7 @@ function Cart(props) {
     cartState.items.map((item) => {
       return (
         <div key={item.productId}>
-          <img src={item.imageUrl} />
+          <img src={url + item.imageUrl} />
           <h3>{item.productName}</h3>
           <h4>${item.price / 100}</h4>
           <h5>{item.qty}</h5>
