@@ -1,4 +1,4 @@
-const pool = require("./pool");
+const pool = require('./pool')
 
 async function createOrderByUserId(userId) {
   const { rows } = await pool.query(
@@ -8,12 +8,12 @@ async function createOrderByUserId(userId) {
                 RETURNING * 
         `,
     [userId]
-  );
+  )
 
-  console.log("ROWWWWSSSS", rows);
-  const [cart] = mapTheRows(rows);
-  console.log("CART", cart);
-  return cart;
+  console.log('ROWWWWSSSS', rows)
+  const [cart] = mapTheRows(rows)
+  console.log('CART', cart)
+  return cart
 }
 
 async function getAllOrders() {
@@ -32,12 +32,12 @@ async function getAllOrders() {
     ON orders.id = orders_products."orderId"
     JOIN products
     ON orders_products."productId" = products.id
-    `);
-  return mapTheRows(rows);
+    `)
+  return mapTheRows(rows)
 }
 
 function mapTheRows(rows) {
-  const mappedOrders = {};
+  const mappedOrders = {}
 
   for (const row of rows) {
     if (!mappedOrders[row.id]) {
@@ -46,7 +46,7 @@ function mapTheRows(rows) {
         userId: row.userId,
         isActive: row.isActive,
         items: [],
-      };
+      }
       if (row.productId) {
         mappedOrders[row.id].items.push({
           productId: row.productId,
@@ -54,7 +54,7 @@ function mapTheRows(rows) {
           productName: row.productName,
           description: row.description,
           price: row.price,
-        });
+        })
       }
     } else {
       if (row.productId) {
@@ -64,11 +64,11 @@ function mapTheRows(rows) {
           productName: row.productName,
           description: row.description,
           price: row.price,
-        });
+        })
       }
     }
   }
-  return Object.values(mappedOrders);
+  return Object.values(mappedOrders)
 }
 
 async function getOrderById(orderId) {
@@ -91,11 +91,11 @@ async function getOrderById(orderId) {
      	WHERE orders.id = $1 
     `,
     [orderId]
-  );
+  )
 
-  console.log(rows);
-  const [mappedOrder] = mapTheRows(rows);
-  return mappedOrder;
+  console.log(rows)
+  const [mappedOrder] = mapTheRows(rows)
+  return mappedOrder
 }
 
 async function getAllOrdersByUserId(userId) {
@@ -118,8 +118,8 @@ async function getAllOrdersByUserId(userId) {
      	WHERE orders."userId" = $1   
     `,
     [userId]
-  );
-  return mapTheRows(rows);
+  )
+  return mapTheRows(rows)
 }
 
 // Get Cart (order that is active) and include everything
@@ -143,9 +143,9 @@ async function getCart(userId) {
     WHERE orders."userId" = $1 and orders."isActive" = true 
     `,
     [userId]
-  );
-  const [mappedOrder] = mapTheRows(rows);
-  return mappedOrder;
+  )
+  const [mappedOrder] = mapTheRows(rows)
+  return mappedOrder
 }
 
 async function purchaseCart(orderId) {
@@ -159,8 +159,8 @@ async function purchaseCart(orderId) {
         RETURNING *
     `,
     [orderId]
-  );
-  return order;
+  )
+  return order
 }
 
 async function deleteOrderById(orderId) {
@@ -173,9 +173,9 @@ async function deleteOrderById(orderId) {
         RETURNING *
     `,
     [orderId]
-  );
+  )
 
-  return deletedOrder;
+  return deletedOrder
 }
 
 module.exports = {
@@ -186,4 +186,4 @@ module.exports = {
   getAllOrders,
   deleteOrderById,
   purchaseCart,
-};
+}
