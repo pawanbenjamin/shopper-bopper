@@ -6,7 +6,7 @@ import axios from "axios";
 
 function Auth({ setIsLoggedIn }) {
   const { cartState, cartDispatch } = useContext(cartContext);
-  const { userState, userDispatch } = useContext(userContext);
+  const { userDispatch } = useContext(userContext);
 
   const { pathname } = useLocation();
   const history = useHistory();
